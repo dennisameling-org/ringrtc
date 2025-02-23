@@ -115,9 +115,9 @@ jobs:
     - name: Work around DBUS_SESSION_BUS_ADDRESS error on Linux arm64
       if: startsWith(matrix.os, 'ubuntu-22.04-arm')
       run: |
-        echo "UID is $UID"
+        echo "UID is $UID. Setting XDG_RUNTIME_DIR to /run/user/$UID"
         sudo systemctl start user@$UID.service
-        echo "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus" >> $GITHUB_ENV
+        echo "XDG_RUNTIME_DIR=/run/user/$UID" >> $GITHUB_ENV
     - name: Install dependencies
       run: |
         if [[ "${{ matrix.os }}" == macos-* ]]; then
